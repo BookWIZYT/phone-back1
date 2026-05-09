@@ -1,0 +1,36 @@
+name: Build PhoneBack
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build with SwiftPM
+        run: |
+          swift build -c release
+          
+      - name: Create App Bundle
+        run: |
+          mkdir -p PhoneBack.app/Contents/MacOS
+          mkdir -p PhoneBack.app/Contents/Resources
+          
+          cp .build/release/PhoneBack PhoneBack.app/Contents/MacOS/
+          cp Info.plist PhoneBack.app/Contents/
+          
+          chmod +x PhoneBack.app/Contents/MacOS/PhoneBack
+          
+          echo "APPL????" > PhoneBack.app/Contents/PkgInfo
+
+      - name: Upload PhoneBack.app
+        uses: actions/upload-artifact@v4
+        with:
+          name: PhoneBack-App
+          path: PhoneBack.app
