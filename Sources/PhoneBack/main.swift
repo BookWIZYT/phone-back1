@@ -50,7 +50,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, UNUserNoti
         }
     }
     
-    // ... (All the functions are included below - this is the complete version)
     func startNotificationTimer() {
         notificationTimer?.invalidate()
         notificationTimer = Timer.scheduledTimer(withTimeInterval: 50.0, repeats: true) { [weak self] _ in
