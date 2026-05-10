@@ -13,21 +13,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build with Swift Package Manager
+      - name: Build with Swift
         run: swift build -c release
 
-      - name: Create PhoneBack.app bundle
+      - name: Create PhoneBack.app
         run: |
-          mkdir -p PhoneBack.app/Contents/MacOS
-          mkdir -p PhoneBack.app/Contents/Resources
+          mkdir -p "PhoneBack.app/Contents/MacOS"
+          mkdir -p "PhoneBack.app/Contents/Resources"
           
-          cp .build/release/PhoneBack PhoneBack.app/Contents/MacOS/PhoneBack
-          cp Info.plist PhoneBack.app/Contents/Info.plist
+          cp ".build/release/PhoneBack" "PhoneBack.app/Contents/MacOS/PhoneBack"
+          cp Info.plist "PhoneBack.app/Contents/Info.plist"
           
-          echo "APPL????" > PhoneBack.app/Contents/PkgInfo
-          chmod +x PhoneBack.app/Contents/MacOS/PhoneBack
+          echo "APPL????" > "PhoneBack.app/Contents/PkgInfo"
+          chmod +x "PhoneBack.app/Contents/MacOS/PhoneBack"
+          chmod -R 755 "PhoneBack.app"
 
-      - name: Upload App
+      - name: Upload PhoneBack App
         uses: actions/upload-artifact@v4
         with:
           name: PhoneBack-App
